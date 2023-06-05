@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './Layout';
-import { Home } from '../../Pages/Home/Home';
-import { About } from '../../Pages/About/About';
-import { NotFoundPage } from '../../Pages/404/404';
 
-function App() {
+import { About, Home, NotFoundPage } from '../../Pages';
+
+import { Layout } from './Layout';
+
+function App(): JSX.Element {
   return (
     <div className='App'>
       <Routes>

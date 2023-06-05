@@ -10,6 +10,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path='/page/:page' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>

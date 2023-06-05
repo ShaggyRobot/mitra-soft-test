@@ -6,15 +6,19 @@ import { rootSaga, sagaMiddleware } from './saga';
 interface IState {
   isFetching: boolean;
   items: IPost[];
+  totalCount: number;
 }
 
 const initState: IState = {
   isFetching: false,
   items: [],
+  totalCount: 0,
 };
 
 const postfetchInProgress = createAction<boolean>('postfetchInProgress');
-const postFetchSucceded = createAction<IPost[]>('postFetchSucceded');
+const postFetchSucceded = createAction<{ posts: IPost[]; totalCount: number }>(
+  'postFetchSucceded',
+);
 
 const postsReducer = createReducer(initState, (builder) => {
   builder.addCase(postfetchInProgress, (state) => {
@@ -23,7 +27,8 @@ const postsReducer = createReducer(initState, (builder) => {
 
   builder.addCase(postFetchSucceded, (state, action) => {
     state.isFetching = false;
-    state.items = action.payload;
+    state.items = action.payload.posts;
+    state.totalCount = action.payload.totalCount
   });
 });
 

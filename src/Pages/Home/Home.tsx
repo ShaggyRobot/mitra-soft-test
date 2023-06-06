@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { AppDispatch, RootState } from '../../Redux/store';
@@ -8,6 +8,7 @@ import { Container, Spinner } from 'react-bootstrap';
 import { Post } from '../../Components/Post/Post';
 import { useParams } from 'react-router-dom';
 import { PaginationComponent } from '../../Components/Pagination/Pagination';
+import { PaginationMobile } from '../../Components/Pagination/PaginationMobile';
 
 const POSTS_PER_PAGE = 5;
 
@@ -18,6 +19,7 @@ function Home(): JSX.Element {
     totalCount,
   } = useSelector((state: RootState) => state);
 
+  const [innerWidth, setInnerWidth] = useState<number>();
   const { page } = useParams() as { page: string };
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,7 +30,18 @@ function Home(): JSX.Element {
         limit: POSTS_PER_PAGE,
       }),
     );
+
+    window.addEventListener('resize', getSize);
+    getSize();
+
+    return () => {
+      window.removeEventListener('resize', getSize);
+    };
   }, [page]);
+
+  const getSize = () => {
+    setInnerWidth(window.innerWidth);
+  };
 
   return (
     <Container
@@ -43,11 +56,19 @@ function Home(): JSX.Element {
       {!isFetching &&
         posts &&
         posts.map((post) => <Post key={post.id} post={post} />)}
-      <PaginationComponent
-        current={page || '1'}
-        postsPerPage={POSTS_PER_PAGE}
-        totalCount={totalCount}
-      />
+      {innerWidth && innerWidth >= 820 ? (
+        <PaginationComponent
+          current={page || '1'}
+          postsPerPage={POSTS_PER_PAGE}
+          totalCount={totalCount}
+        />
+      ) : (
+        <PaginationMobile
+          current={page || '1'}
+          postsPerPage={POSTS_PER_PAGE}
+          totalCount={totalCount}
+        />
+      )}
     </Container>
   );
 }

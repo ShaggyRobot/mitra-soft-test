@@ -33,10 +33,10 @@ function Post(props: IProps): JSX.Element {
           <Image
             roundedCircle
             fluid
-            style={{ height: '48px' }}
+            style={{ height: '48px', minWidth: '48px' }}
             role='button'
-            src={`${process.env.PUBLIC_URL}/cat.jpg`}
-            // onClick={() => navigate(`/user/${post.userId}`)}
+            src={`${process.env.PUBLIC_URL}/Avatars/${post.userId}.jpg`}
+            onClick={() => navigate(`/user/${post.userId}`)}
           />
         </a>
       </Card.Header>

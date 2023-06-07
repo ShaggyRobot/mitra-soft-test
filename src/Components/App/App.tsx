@@ -1,24 +1,13 @@
-import { Route, Routes } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
-import { About, Home, NotFoundPage } from '../../Pages';
-
-import { Layout } from './Layout';
-import { User } from '../../Pages/User/User';
+import { router } from './router';
 
 function App(): JSX.Element {
   return (
-    <div className='App'>
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='/page/:page' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/user/:userId' element={<User />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </div>
+  <div className='App'>
+    <RouterProvider router={router} />
+  </div>
   );
 }
 
-export default App;
+export { App };

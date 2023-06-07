@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { AppDispatch, RootState } from '../../Redux/store';
-import { fetchUserAction } from '../../Redux/saga';
+import { fetchPostsAction, fetchUserAction } from '../../Redux/saga';
+
 import { Button, Container, Spinner } from 'react-bootstrap';
-import { IPost } from '../../Api/api';
-import { Post } from '../../Components/Post/Post';
-import { UserCard } from '../../Components/UserCard/UserCard';
+
+import { IPost } from '../../Api/types';
+import { Post, UserCard } from '../../Components';
 
 function User(): JSX.Element {
   const { userId } = useParams();
@@ -20,7 +22,6 @@ function User(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userId);
     userId && dispatch(fetchUserAction(parseInt(userId)));
   }, []);
 
@@ -32,19 +33,26 @@ function User(): JSX.Element {
       <Button
         variant='link'
         className='d-block me-auto'
-        onClick={() => navigate(-1)}
+        onClick={() => {
+          navigate('/');
+        }}
       >
         {'<<Go Back'}
       </Button>
       {!isFetching && user && <UserCard user={user} />}
+
       {isFetching && (
         <div className='d-flex flex-grow-1 align-items-center justify-content-center'>
           <Spinner />
         </div>
       )}
+
       {!isFetching &&
         posts &&
-        posts.map((post: IPost) => <Post key={post.id} post={post} />)}
+        user &&
+        posts
+          .filter((post) => post.userId === user?.id)
+          .map((post: IPost) => <Post key={post.id} post={post} />)}
     </Container>
   );
 }

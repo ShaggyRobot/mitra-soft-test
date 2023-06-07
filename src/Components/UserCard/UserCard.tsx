@@ -1,5 +1,5 @@
 import { Card, Image, Table } from 'react-bootstrap';
-import { IUser } from '../../Api/api';
+import { IUser } from '../../Api/types';
 
 interface IProps {
   user: IUser;
@@ -16,7 +16,7 @@ function UserCard({ user }: IProps): JSX.Element {
         fluid
         roundedCircle
         thumbnail
-        className='d-block mx-auto mb-3'
+        className='d-block mx-auto mb-3 h-30'
         src={`${process.env.PUBLIC_URL}/Avatars/${user.id}.jpg`}
       />
         <Table striped bordered responsive>

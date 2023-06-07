@@ -1,31 +1,15 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import createSagaMiddlware from '@redux-saga/core';
 
-import {
-  IComment,
-  IPost,
-  IUserDTO,
-  getComments,
-  getPosts,
-  getUser,
-} from '../Api/api';
+import { getComments, getPosts, getUser } from '../Api/api';
+
 import { delay } from '../Utils';
+import { IComment, IPost, IUserDTO } from '../Api/types';
 
-interface IFetchPostsPayload {
-  start: number;
-  limit: number;
-}
-
-function* fetchPosts({
-  payload,
-}: {
-  type: 'postFetchRequested';
-  payload: IFetchPostsPayload;
-}) {
-  const { start, limit } = payload;
+function* fetchPosts() {
   yield put({ type: 'postfetchInProgress' });
   yield delay(1000);
-  const posts: IPost[] = yield call(getPosts, start, limit);
+  const posts: IPost[] = yield call(getPosts);
   yield put({ type: 'postFetchSucceded', payload: posts });
 }
 
@@ -49,12 +33,10 @@ function* fetchUser({
 }) {
   const userId = payload;
   yield put({ type: 'postfetchInProgress' });
-  yield delay(1000);
+  yield delay(500);
   const user: IUserDTO = yield call(getUser, userId);
-  console.log(user);
 
   yield put({ type: 'userFetchSucceded', payload: user });
-  yield put({type: 'postFetchSucceded', payload: user.userPosts})
 }
 
 function* rootSaga() {
@@ -63,9 +45,8 @@ function* rootSaga() {
   yield takeEvery('userFetchRequested', fetchUser);
 }
 
-const fetchPostsAction = (payload: IFetchPostsPayload) => ({
+const fetchPostsAction = () => ({
   type: 'postFetchRequested',
-  payload,
 });
 
 const fetchCommentsAction = (payload: number) => ({

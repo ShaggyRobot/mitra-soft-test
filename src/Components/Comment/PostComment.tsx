@@ -1,4 +1,4 @@
-import { IComment } from '../../Api/api';
+import { IComment } from "../../Api/types";
 
 interface IProps {
   comment: IComment;

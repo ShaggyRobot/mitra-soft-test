@@ -1,6 +1,6 @@
 import { configureStore, createAction, createReducer } from '@reduxjs/toolkit';
 
-import { IComment, IPost, IUserDTO } from '../Api/api';
+import { IComment, IPost, IUserDTO } from '../Api/types';
 import { rootSaga, sagaMiddleware } from './saga';
 
 interface IState {
@@ -38,7 +38,6 @@ const postsReducer = createReducer(initState, (builder) => {
   });
 
   builder.addCase(postFetchSucceded, (state, action) => {
-    console.log('@postFetchSucceded', action.payload);
     state.isFetching = false;
     state.items = action.payload.posts;
     state.totalCount = action.payload.totalCount;
@@ -50,8 +49,8 @@ const postsReducer = createReducer(initState, (builder) => {
   });
 
   builder.addCase(userFetchSucceded, (state, action) => {
-    console.log('@userFetchSucceded');
     state.user = action.payload;
+    state.isFetching = false;
   });
 });
 

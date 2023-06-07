@@ -13,7 +13,6 @@ function PaginationMobile({
   postsPerPage,
 }: IProps): JSX.Element {
   const navigate = useNavigate();
-
   const totalPages = Math.ceil(totalCount / postsPerPage);
 
   return (

@@ -48,6 +48,7 @@ function Home(): JSX.Element {
     return () => {
       window.removeEventListener('resize', getSize);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, posts, searchString, sortOrder]);
 
   const getSize = () => {

@@ -16,7 +16,8 @@ function UserCard({ user }: IProps): JSX.Element {
         fluid
         roundedCircle
         thumbnail
-        className='d-block mx-auto mb-3 h-30'
+        className='d-block mx-auto mb-3'
+        style={{height: '256px'}}
         src={`${process.env.PUBLIC_URL}/Avatars/${user.id}.jpg`}
       />
         <Table striped bordered responsive>

@@ -23,6 +23,7 @@ function User(): JSX.Element {
 
   useEffect(() => {
     userId && dispatch(fetchUserAction(parseInt(userId)));
+    !posts.length && dispatch(fetchPostsAction());
   }, []);
 
   return (

@@ -55,11 +55,11 @@ const getComments = async (postId: number) => {
     if (axios.isAxiosError(error)) {
       console.error(error.code, error.message);
 
-      return [];
+      return { id: postId, comments: [] };
     } else {
       console.error('Somethiong gone wrong.');
 
-      return [];
+      return { id: postId, comments: [] };
     }
   }
 };

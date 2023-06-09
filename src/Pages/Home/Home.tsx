@@ -96,6 +96,7 @@ function Home(): JSX.Element {
             aria-describedby='search'
             placeholder='Search by title'
             style={{ borderColor: 'var(--bs-gray-600)' }}
+            autoComplete='off'
           />
           <DropdownButton
             as={ButtonGroup}
